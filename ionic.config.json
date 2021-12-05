@@ -1,11 +1,12 @@
 {
-  "name": "moodlemobile",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular",
-  "hooks": {
-    "build:before": "./scripts/copy-assets.js",
-    "serve:before": "./scripts/copy-assets.js"
-  }
+    "name": "mobile",
+    "integrations": {
+        "cordova": {}
+    },
+    "type": "angular",
+    "id": "com.edx_learnclue.mobile",
+    "hooks": {
+        "build:before": "./scripts/copy-assets.js",
+        "serve:before": "./scripts/copy-assets.js"
+    }
 }
