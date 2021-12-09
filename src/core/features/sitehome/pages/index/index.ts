@@ -249,6 +249,15 @@ export class CoreSiteHomeIndexPage implements OnInit, OnDestroy {
         this.updateSiteObserver?.off();
     }
 
+     /**
+     * Open a category.
+     *
+     * @param categoryId Category Id.
+     */
+      openCategory(categoryId: number): void {
+        CoreNavigator.navigateToSitePath('courses/categories/' + categoryId);
+    }
+
 }
 
 type NewsForum = CoreCourseModuleBasicInfo & {

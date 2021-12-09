@@ -3,12 +3,8 @@
         <ion-icon name="fas-search" slot="icon-only" aria-hidden="true"></ion-icon>
     </ion-button>
     <core-context-menu>
-        <core-context-menu-item *ngIf="(downloadCourseEnabled || downloadCoursesEnabled)" [priority]="1000"
-        [content]="'core.settings.showdownloadoptions' | translate" (action)="toggleDownload()"
-        [iconAction]="downloadEnabledIcon"></core-context-menu-item>
-        <core-context-menu-item *ngIf="(downloadCourseEnabled || downloadCoursesEnabled)" [priority]="500"
-        [content]="'addon.storagemanager.managestorage' | translate"
-        (action)="manageCoursesStorage()" iconAction="fas-archive"></core-context-menu-item>
+        <core-context-menu-item *ngIf="(downloadCourseEnabled || downloadCoursesEnabled)" [priority]="1000" [content]="'core.settings.showdownloadoptions' | translate" (action)="toggleDownload()" [iconAction]="downloadEnabledIcon"></core-context-menu-item>
+        <core-context-menu-item *ngIf="(downloadCourseEnabled || downloadCoursesEnabled)" [priority]="500" [content]="'addon.storagemanager.managestorage' | translate" (action)="manageCoursesStorage()" iconAction="fas-archive"></core-context-menu-item>
     </core-context-menu>
 </core-navbar-buttons>
 <ion-content>
@@ -17,42 +13,46 @@
     </ion-refresher>
     <core-block-course-blocks [courseId]="siteHomeId" [downloadEnabled]="downloadEnabled">
         <core-loading [hideUntil]="dataLoaded">
-                <ion-list>
-                    <!-- Site home main contents. -->
-                    <ng-container *ngIf="section && section.hasContent">
-                        <ion-item class="ion-text-wrap" *ngIf="section.summary">
-                            <ion-label><core-format-text [text]="section.summary" contextLevel="course" [contextInstanceId]="siteHomeId">
-                            </core-format-text></ion-label>
-                        </ion-item>
+            <ion-list>
+                <!-- Site home main contents. -->
+                <ng-container *ngIf="section && section.hasContent">
+                    <ion-item class="ion-text-wrap" *ngIf="section.summary">
+                        <ion-label>
+                            <core-format-text [text]="section.summary" contextLevel="course" [contextInstanceId]="siteHomeId">
+                            </core-format-text>
+                        </ion-label>
+                    </ion-item>
 
-                        <core-course-module *ngFor="let module of section.modules" [module]="module" [courseId]="siteHomeId"
-                            [downloadEnabled]="downloadEnabled" [section]="section"></core-course-module>
-                    </ng-container>
+                    <core-course-module *ngFor="let module of section.modules" [module]="module" [courseId]="siteHomeId" [downloadEnabled]="downloadEnabled" [section]="section"></core-course-module>
+                </ng-container>
 
-                    <!-- Site home items: news, categories, courses, etc. -->
-                    <ng-container *ngIf="items.length > 0">
-                        <core-spacer *ngIf="section && section!.hasContent"></core-spacer>
-                        <ng-container *ngFor="let item of items">
-                            <ng-container [ngSwitch]="item">
-                                <ng-container *ngSwitchCase="'LIST_OF_COURSE'">
-                                    <ng-template *ngTemplateOutlet="allCourseList"></ng-template>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="'LIST_OF_CATEGORIES'">
-                                    <ng-template *ngTemplateOutlet="categories"></ng-template>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="'COURSE_SEARCH_BOX'">
-                                    <ng-template *ngTemplateOutlet="courseSearch"></ng-template>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="'ENROLLED_COURSES'">
-                                    <ng-template *ngTemplateOutlet="enrolledCourseList"></ng-template>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="'NEWS_ITEMS'">
-                                    <ng-template *ngTemplateOutlet="news"></ng-template>
-                                </ng-container>
+                <!-- Site home items: news, categories, courses, etc. -->
+                <ng-container *ngIf="items.length > 0">
+                    <core-spacer *ngIf="section && section!.hasContent"></core-spacer>
+                    <ng-container *ngFor="let item of items">
+                        <ng-container [ngSwitch]="item">
+                            <ng-container *ngSwitchCase="'LIST_OF_COURSE'">
+                                <ng-template *ngTemplateOutlet="allCourseList"></ng-template>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'LIST_OF_CATEGORIES'">
+                                <ng-template *ngTemplateOutlet="categories"></ng-template>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'COURSE_SEARCH_BOX'">
+                                <ng-template *ngTemplateOutlet="courseSearch"></ng-template>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'ENROLLED_COURSES'">
+                                <ng-template *ngTemplateOutlet="enrolledCourseList"></ng-template>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'NEWS_ITEMS'">
+                                <ng-template *ngTemplateOutlet="news"></ng-template>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'HOME_PRODUCT'">
+                                <ng-template *ngTemplateOutlet="lchome"></ng-template>
                             </ng-container>
                         </ng-container>
                     </ng-container>
-                </ion-list>
+                </ng-container>
+            </ion-list>
             <core-empty-box *ngIf="!hasContent" icon="fas-box-open" [message]="'core.course.nocontentavailable' | translate">
 
             </core-empty-box>
@@ -67,6 +67,84 @@
             <h2>{{ 'core.courses.availablecourses' | translate}}</h2>
         </ion-label>
     </ion-item>
+</ng-template>
+
+<ng-template #lchome>
+    <ion-card class="text-center" button (click)="openCategory(3)">
+        <ion-row>
+            <ion-col col-4>
+                <ion-img [src]="'./assets/img/icons/abacus_card.png'" width="100%"></ion-img>
+            </ion-col>
+            <ion-col col-8>
+                <h1>Digital Abacus</h1>
+                <p>World’s first Digital Abacus by LearnClue.. A 360 degrees Brain Development Program</p>
+            </ion-col>
+        </ion-row>
+
+    </ion-card>
+    <!-- <ion-card class="text-center" (click)="gotoVedicMath()">  gotoVedicMath -->
+    <ion-card class="text-center" button (click)="openCategory(11)">
+        <ion-row>
+            <ion-col col-8>
+                <h1>VedicMath</h1>
+                <p>Vedic Math also known as Speed Math.. Solve Math problems in seconds </p>
+            </ion-col>
+            <ion-col col-4>
+                <ion-img [src]="'./assets/img/icons/vedicmath_card.png'" width="100%"></ion-img>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+    <ion-card class="text-center">
+        <ion-label>
+            <h2>Abacus</h2>
+        </ion-label>
+        <ion-row>
+            <ion-col col-5>
+                <ion-img [src]="'./assets/img/icons/digital-abacus.png'" width="30%"></ion-img>
+            </ion-col>
+            <ion-col col-7>
+                <ion-row>
+                    <ion-item button class="ion-text-wrap" (click)="openCategory(5)" detail="true">
+                        <ion-label>
+                            <h2>Juniors (below 9 years)</h2>
+                        </ion-label>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item button class="ion-text-wrap" (click)="openCategory(4)" detail="true">
+                        <ion-label>
+                            <h2>Seniors (above 9 years)</h2>
+                        </ion-label>
+                    </ion-item>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <core-spacer></core-spacer>
+        <ion-label>
+            <h2>Vedic math</h2>
+        </ion-label>
+        <ion-row>
+            <ion-col col-6>
+                <ion-row>
+                    <ion-item button class="ion-text-wrap" (click)="openCategory(12)" detail="true">
+                        <ion-label>
+                            <h2>Basic (grade 5 to 7)</h2>
+                        </ion-label>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item button class="ion-text-wrap" (click)="openCategory(13)" detail="true">
+                        <ion-label>
+                            <h2>Advance (grade 8 to 10)</h2>
+                        </ion-label>
+                    </ion-item>
+                </ion-row>
+            </ion-col>
+            <ion-col col-6>
+                <ion-img [src]="'./assets/img/icons/academic_card.png'" width="30%"></ion-img>
+            </ion-col>
+        </ion-row>
+    </ion-card>
 </ng-template>
 
 <ng-template #news>
@@ -87,13 +165,17 @@
     <ion-item button class="ion-text-wrap" (click)="openMyCourses()" detail="true">
         <ion-icon name="fas-graduation-cap" fixed-width slot="start" aria-hidden="true">
         </ion-icon>
-        <ion-label><h2>{{ 'core.courses.mycourses' | translate}}</h2></ion-label>
+        <ion-label>
+            <h2>{{ 'core.courses.mycourses' | translate}}</h2>
+        </ion-label>
     </ion-item>
 </ng-template>
 
 <ng-template #courseSearch>
     <ion-item button class="ion-text-wrap" (click)="openSearch()" detail="true">
         <ion-icon name="fas-search" slot="start" aria-hidden="true"></ion-icon>
-        <ion-label><h2>{{ 'core.courses.searchcourses' | translate}}</h2></ion-label>
+        <ion-label>
+            <h2>{{ 'core.courses.searchcourses' | translate}}</h2>
+        </ion-label>
     </ion-item>
 </ng-template>

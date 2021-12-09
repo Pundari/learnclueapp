@@ -31,6 +31,7 @@ export enum FrontPageItemNames {
     ENROLLED_COURSES = 5,
     LIST_OF_COURSE = 6,
     COURSE_SEARCH_BOX = 7,
+    HOME_PRODUCT = 8,
 }
 
 /**
@@ -195,7 +196,10 @@ export class CoreSiteHomeProvider {
                 filteredItems.push(FrontPageItemNames[itemNumber]);
             }
         }
-
+        let itemNumber = FrontPageItemNames['HOME_PRODUCT'];
+        if (filteredItems.indexOf(FrontPageItemNames[itemNumber]) < 0) {
+            filteredItems.push(FrontPageItemNames[itemNumber]);
+        }
         return filteredItems;
     }
 

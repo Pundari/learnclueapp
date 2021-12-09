@@ -2,6 +2,7 @@
 @import "~theme/theme";
 :host {
     --tabs-background: var(--core-tabs-background);
+    // --tabs-background: var(--primary-tabs-background);
     --tabs-color: var(--core-tab-color);
     --height: var(--core-tabs-height);
     height: 100%;
